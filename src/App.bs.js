@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import * as RescriptReactRouter from "@rescript/react/src/RescriptReactRouter.bs.js";
+import * as Comps$RescriptReactIntro from "./Comps.bs.js";
 import * as CompTabs$RescriptReactIntro from "./CompTabs.bs.js";
 
 import './site.css';
@@ -19,6 +20,14 @@ function App(Props) {
             exit = 1;
           } else {
             component = React.createElement("div", undefined, "Tasks");
+          }
+          break;
+      case "comp-prefix" :
+          var match$1 = match.tl;
+          if (match$1 && !match$1.tl) {
+            component = React.createElement("div", undefined, "Select comp " + match$1.hd);
+          } else {
+            exit = 1;
           }
           break;
       case "pilots" :
@@ -39,7 +48,7 @@ function App(Props) {
         exit = 1;
     }
   } else {
-    component = React.createElement("div", undefined, "Home page");
+    component = React.createElement(Comps$RescriptReactIntro.make, {});
   }
   if (exit === 1) {
     component = React.createElement("div", undefined, "Route not found");

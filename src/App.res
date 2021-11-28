@@ -8,7 +8,8 @@ let make = () => {
   | list{"settings"} => <div> {React.string("Settings")} </div>
   | list{"comp"} => <div> {React.string("Tasks")} </div>
   | list{"pilots"} => <div> {React.string("Pilots")} </div>
-  | list{} => <div> {React.string("Home page")} </div>
+  | list{"comp-prefix", comp} => <div> {React.string("Select comp " ++ comp)} </div>
+  | list{} => <Comps />
   | _ => <div> {React.string("Route not found")} </div>
   }
 
