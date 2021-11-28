@@ -1,4 +1,4 @@
-module NavButton = {
+module Tab = {
   @react.component
   let make = (~name: string, ~selected: string, ~linkTo: string) => {
     let style = if selected == name {
@@ -16,14 +16,15 @@ let make = () => {
   let url = RescriptReactRouter.useUrl()
 
   let selected = switch url.path {
-  | list{"recipes", ..._} => "Recipes"
-  | list{"tags", ..._} => "Tags"
+  | list{"settings", ..._} => "Settings"
+  | list{"comp", ..._} => "Tasks"
+  | list{"pilots", ..._} => "Pilots"
   | _ => "Home"
   }
 
   <div style={ReactDOM.Style.make(~display="flex", ~justifyContent="center", ())}>
-    <NavButton name="Home" selected={selected} linkTo="/" />
-    <NavButton name="Tags" selected={selected} linkTo="/tags" />
-    <NavButton name="Recipes" selected={selected} linkTo="/recipes/add" />
+    <Tab name="Settings" selected={selected} linkTo="/settings" />
+    <Tab name="Tasks" selected={selected} linkTo="/comp" />
+    <Tab name="Pilots" selected={selected} linkTo="/pilots" />
   </div>
 }

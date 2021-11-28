@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import * as RescriptReactRouter from "@rescript/react/src/RescriptReactRouter.bs.js";
-import * as NavBar$RescriptReactIntro from "./NavBar.bs.js";
+import * as CompTabs$RescriptReactIntro from "./CompTabs.bs.js";
 
 import './site.css';
 ;
@@ -14,30 +14,25 @@ function App(Props) {
   var exit = 0;
   if (match) {
     switch (match.hd) {
-      case "recipes" :
-          var match$1 = match.tl;
-          if (match$1) {
-            var title = match$1.hd;
-            if (title === "add") {
-              if (match$1.tl) {
-                exit = 1;
-              } else {
-                component = React.createElement("div", undefined, "Add Recipe");
-              }
-            } else if (match$1.tl) {
-              exit = 1;
-            } else {
-              component = React.createElement("div", undefined, "View Recipe " + title);
-            }
-          } else {
-            exit = 1;
-          }
-          break;
-      case "tags" :
+      case "comp" :
           if (match.tl) {
             exit = 1;
           } else {
-            component = React.createElement("div", undefined, "All tags");
+            component = React.createElement("div", undefined, "Tasks");
+          }
+          break;
+      case "pilots" :
+          if (match.tl) {
+            exit = 1;
+          } else {
+            component = React.createElement("div", undefined, "Pilots");
+          }
+          break;
+      case "settings" :
+          if (match.tl) {
+            exit = 1;
+          } else {
+            component = React.createElement("div", undefined, "Settings");
           }
           break;
       default:
@@ -49,7 +44,7 @@ function App(Props) {
   if (exit === 1) {
     component = React.createElement("div", undefined, "Route not found");
   }
-  return React.createElement("div", undefined, React.createElement(NavBar$RescriptReactIntro.make, {}), component);
+  return React.createElement("div", undefined, React.createElement(CompTabs$RescriptReactIntro.make, {}), component);
 }
 
 var make = App;

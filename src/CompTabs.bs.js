@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as RescriptReactRouter from "@rescript/react/src/RescriptReactRouter.bs.js";
 
-function NavBar$NavButton(Props) {
+function CompTabs$Tab(Props) {
   var name = Props.name;
   var selected = Props.selected;
   var linkTo = Props.linkTo;
@@ -22,21 +22,24 @@ function NavBar$NavButton(Props) {
             }, name);
 }
 
-var NavButton = {
-  make: NavBar$NavButton
+var Tab = {
+  make: CompTabs$Tab
 };
 
-function NavBar(Props) {
+function CompTabs(Props) {
   var url = RescriptReactRouter.useUrl(undefined, undefined);
   var match = url.path;
   var selected;
   if (match) {
     switch (match.hd) {
-      case "recipes" :
-          selected = "Recipes";
+      case "comp" :
+          selected = "Tasks";
           break;
-      case "tags" :
-          selected = "Tags";
+      case "pilots" :
+          selected = "Pilots";
+          break;
+      case "settings" :
+          selected = "Settings";
           break;
       default:
         selected = "Home";
@@ -49,25 +52,25 @@ function NavBar(Props) {
                 display: "flex",
                 justifyContent: "center"
               }
-            }, React.createElement(NavBar$NavButton, {
-                  name: "Home",
+            }, React.createElement(CompTabs$Tab, {
+                  name: "Settings",
                   selected: selected,
-                  linkTo: "/"
-                }), React.createElement(NavBar$NavButton, {
-                  name: "Tags",
+                  linkTo: "/settings"
+                }), React.createElement(CompTabs$Tab, {
+                  name: "Tasks",
                   selected: selected,
-                  linkTo: "/tags"
-                }), React.createElement(NavBar$NavButton, {
-                  name: "Recipes",
+                  linkTo: "/comp"
+                }), React.createElement(CompTabs$Tab, {
+                  name: "Pilots",
                   selected: selected,
-                  linkTo: "/recipes/add"
+                  linkTo: "/pilots"
                 }));
 }
 
-var make = NavBar;
+var make = CompTabs;
 
 export {
-  NavButton ,
+  Tab ,
   make ,
   
 }
