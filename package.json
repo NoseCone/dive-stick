@@ -7,6 +7,14 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "bulma": "^0.9.3",
+    "font-awesome": "^4.7.0",
+    "leaflet": "^1.7.1",
+    "leaflet-defaulticon-compatibility": "^0.1.1",
+    "leaflet-draw": "^1.0.4",
+    "leaflet-geometryutil": "^0.10.0",
+    "leaflet-semicircle": "^2.0.4",
+    "leaflet.measurecontrol": "^1.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
@@ -17,7 +25,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start:res": "rescript build -w"
+    "start:res": "rescript build -w",
+    "style": "sass --watch src/site.sass:src/site.css --load-path ./node_modules"
   },
   "eslintConfig": {
     "extends": [
@@ -39,6 +48,7 @@
   },
   "devDependencies": {
     "gentype": "^4.3.0",
-    "rescript": "^9.1.4"
+    "rescript": "^9.1.4",
+    "sass": "^1.43.5"
   }
 }

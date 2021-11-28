@@ -4,7 +4,7 @@ import * as React from "react";
 import * as RescriptReactRouter from "@rescript/react/src/RescriptReactRouter.bs.js";
 import * as NavBar$RescriptReactIntro from "./NavBar.bs.js";
 
-import './App.css';
+import './site.css';
 ;
 
 function App(Props) {
