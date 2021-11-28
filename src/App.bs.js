@@ -4,6 +4,7 @@ import * as React from "react";
 import * as RescriptReactRouter from "@rescript/react/src/RescriptReactRouter.bs.js";
 import * as Comps$RescriptReactIntro from "./Comps.bs.js";
 import * as CompTabs$RescriptReactIntro from "./CompTabs.bs.js";
+import * as CompHeader$RescriptReactIntro from "./CompHeader.bs.js";
 
 import './site.css';
 ;
@@ -19,7 +20,7 @@ function App(Props) {
           if (match.tl) {
             exit = 1;
           } else {
-            component = React.createElement("div", undefined, "Tasks");
+            component = React.createElement("div", undefined, React.createElement(CompHeader$RescriptReactIntro.make, {}), "Tasks", React.createElement(CompTabs$RescriptReactIntro.make, {}));
           }
           break;
       case "comp-prefix" :
@@ -34,14 +35,14 @@ function App(Props) {
           if (match.tl) {
             exit = 1;
           } else {
-            component = React.createElement("div", undefined, "Pilots");
+            component = React.createElement("div", undefined, React.createElement(CompHeader$RescriptReactIntro.make, {}), "Pilots", React.createElement(CompTabs$RescriptReactIntro.make, {}));
           }
           break;
       case "settings" :
           if (match.tl) {
             exit = 1;
           } else {
-            component = React.createElement("div", undefined, "Settings");
+            component = React.createElement("div", undefined, React.createElement(CompHeader$RescriptReactIntro.make, {}), "Settings", React.createElement(CompTabs$RescriptReactIntro.make, {}));
           }
           break;
       default:
@@ -53,7 +54,7 @@ function App(Props) {
   if (exit === 1) {
     component = React.createElement("div", undefined, "Route not found");
   }
-  return React.createElement("div", undefined, React.createElement(CompTabs$RescriptReactIntro.make, {}), component);
+  return React.createElement("div", undefined, component);
 }
 
 var make = App;
