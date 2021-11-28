@@ -3,8 +3,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import {make as App} from './App.bs';
-import reportWebVitals from './reportWebVitals';
+`)
 
+@module("./reportWebVitals") external reportWebVitals: 'whatever = "default"
+
+%%raw(`
 const root = document.getElementById("rescript")
 
 if (root) {
