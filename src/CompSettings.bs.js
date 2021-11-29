@@ -7,17 +7,20 @@ function s(prim) {
 }
 
 function CompSettings(Props) {
+  var giveFraction = Props.giveFraction;
+  var earthRadius = Props.earthRadius;
+  var earthMath = Props.earthMath;
   return React.createElement(React.Fragment, undefined, React.createElement("table", {
                   className: "table is-bordered"
                 }, React.createElement("thead", undefined, React.createElement("tr", undefined, React.createElement("th", {
                               colSpan: 3
                             }), React.createElement("th", undefined, "Value"))), React.createElement("tbody", undefined, React.createElement("tr", undefined, React.createElement("th", undefined, "* Give"), React.createElement("td", {
                               colSpan: 2
-                            }, "give fraction only, no give distance"), React.createElement("td", undefined, "0.005")), React.createElement("tr", undefined, React.createElement("th", undefined, "Earth model"), React.createElement("td", {
+                            }, "give fraction only, no give distance"), React.createElement("td", undefined, String(giveFraction))), React.createElement("tr", undefined, React.createElement("th", undefined, "Earth model"), React.createElement("td", {
                               colSpan: 2
-                            }, "Sphere with radius"), React.createElement("td", undefined, "6371000.0 m")), React.createElement("tr", undefined, React.createElement("th", {
+                            }, "Sphere with radius"), React.createElement("td", undefined, earthRadius)), React.createElement("tr", undefined, React.createElement("th", {
                               colSpan: 3
-                            }, "Earth math"), React.createElement("td", undefined, "Haversines"))), React.createElement("tfoot", undefined, React.createElement("tr", undefined, React.createElement("td", {
+                            }, "Earth math"), React.createElement("td", undefined, earthMath))), React.createElement("tfoot", undefined, React.createElement("tr", undefined, React.createElement("td", {
                               colSpan: 4
                             }, "* Adjusting the turnpoint radius with some give for pilots just short of the control zone")))));
 }

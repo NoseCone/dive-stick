@@ -55,7 +55,11 @@ let make = () => {
       <Spacer />
       <Breadcrumb compName={comp.compName} />
       <CompTabs />
-      <CompSettings />
+      <CompSettings
+        giveFraction={comp.give.giveFraction}
+        earthRadius={comp.earth.sphere.radius}
+        earthMath={comp.earthMath}
+      />
     </div>
 
   | list{"comp"} =>

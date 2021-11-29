@@ -1,7 +1,7 @@
 let s = React.string
 
 @react.component
-let make = () => {
+let make = (~giveFraction: float, ~earthRadius: string, ~earthMath: string) => {
   <>
     <table className="table is-bordered">
       <thead>
@@ -22,7 +22,7 @@ let make = () => {
             {s("give fraction only, no give distance")}
           </td>
           <td>
-            {s("0.005")}
+            {s({Belt.Float.toString(giveFraction)})}
           </td>
         </tr>
         <tr>
@@ -33,7 +33,7 @@ let make = () => {
             {s("Sphere with radius")}
           </td>
           <td>
-            {s("6371000.0 m")}
+            {s({earthRadius})}
           </td>
         </tr>
         <tr>
@@ -41,7 +41,7 @@ let make = () => {
             {s("Earth math")}
           </th>
           <td>
-            {s("Haversines")}
+            {s({earthMath})}
           </td>
         </tr>
       </tbody>

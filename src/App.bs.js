@@ -133,7 +133,11 @@ function App(Props) {
                           nominals: nominals
                         }), React.createElement(App$Spacer, {}), React.createElement(App$Breadcrumb, {
                           compName: comp.compName
-                        }), React.createElement(CompTabs$RescriptReactIntro.make, {}), React.createElement(CompSettings$RescriptReactIntro.make, {}));
+                        }), React.createElement(CompTabs$RescriptReactIntro.make, {}), React.createElement(CompSettings$RescriptReactIntro.make, {
+                          giveFraction: comp.give.giveFraction,
+                          earthRadius: comp.earth.sphere.radius,
+                          earthMath: comp.earthMath
+                        }));
         }
         break;
     default:

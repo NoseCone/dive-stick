@@ -53,7 +53,19 @@ type task = {
   taskName: string,
   zones: rawZones,
   stopped: option<stopped>,
-  cancelled: option<bool>
+  cancelled: option<bool>,
+}
+
+type pilotStatus = {
+  pilotId: string,
+  pilotName: string,
+  pilotStatus: list<string>,
+}
+
+let nullPilotStatus = {
+  pilotId: "",
+  pilotName: "",
+  pilotStatus: list{}
 }
 
 external unsafeCast: Js.Json.t => 'a = "%identity"
@@ -92,6 +104,15 @@ let getTaskLengths = (
 let getCompTasks = (~haveUrl: bool, ~url: string, ~set: (list<task> => list<task>) => unit) => {
   if haveUrl {
     let dataUrl = `${url}/comp-input/tasks.json`
+    dataUrl->Fetch.fetch->Js.Promise.then_(Fetch.Response.json, _)->Js.Promise.then_(x => {
+      x->unsafeCast->(n => set(_ => n))->Js.Promise.resolve
+    }, _) |> ignore
+  }
+}
+
+let getCompPilots = (~haveUrl: bool, ~url: string, ~set: (list<pilotStatus> => list<pilotStatus>) => unit) => {
+  if haveUrl {
+    let dataUrl = `${url}/gap-point/pilots-status.json`
     dataUrl->Fetch.fetch->Js.Promise.then_(Fetch.Response.json, _)->Js.Promise.then_(x => {
       x->unsafeCast->(n => set(_ => n))->Js.Promise.resolve
     }, _) |> ignore
