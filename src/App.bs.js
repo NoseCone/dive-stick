@@ -11,6 +11,31 @@ import * as CompHeader$RescriptReactIntro from "./CompHeader.bs.js";
 import './site.css';
 ;
 
+function App$Breadcrumb(Props) {
+  var compName = Props.compName;
+  return React.createElement("nav", {
+              className: "breadcrumb"
+            }, React.createElement("ul", undefined, React.createElement("li", undefined, React.createElement("a", {
+                          href: "/"
+                        }, "Dive Stick (Rescript)")), React.createElement("li", {
+                      className: "is-active"
+                    }, compName)));
+}
+
+var Breadcrumb = {
+  make: App$Breadcrumb
+};
+
+function App$Spacer(Props) {
+  return React.createElement("div", {
+              className: "spacer"
+            });
+}
+
+var Spacer = {
+  make: App$Spacer
+};
+
 function App(Props) {
   var url = RescriptReactRouter.useUrl(undefined, undefined);
   var match = React.useState(function () {
@@ -79,10 +104,12 @@ function App(Props) {
           if (match$3.tl) {
             exit = 1;
           } else {
-            component = React.createElement("div", undefined, React.createElement(CompHeader$RescriptReactIntro.make, {
+            component = React.createElement("div", undefined, React.createElement(App$Spacer, {}), React.createElement(CompHeader$RescriptReactIntro.make, {
                       comp: comp,
                       nominals: nominals
-                    }), "Tasks", React.createElement(CompTabs$RescriptReactIntro.make, {}));
+                    }), React.createElement(App$Spacer, {}), React.createElement(App$Breadcrumb, {
+                      compName: comp.compName
+                    }), React.createElement(App$Spacer, {}), "Tasks", React.createElement(CompTabs$RescriptReactIntro.make, {}));
           }
           break;
       case "comp-prefix" :
@@ -97,20 +124,24 @@ function App(Props) {
           if (match$3.tl) {
             exit = 1;
           } else {
-            component = React.createElement("div", undefined, React.createElement(CompHeader$RescriptReactIntro.make, {
+            component = React.createElement("div", undefined, React.createElement(App$Spacer, {}), React.createElement(CompHeader$RescriptReactIntro.make, {
                       comp: comp,
                       nominals: nominals
-                    }), "Pilots", React.createElement(CompTabs$RescriptReactIntro.make, {}));
+                    }), React.createElement(App$Spacer, {}), React.createElement(App$Breadcrumb, {
+                      compName: comp.compName
+                    }), React.createElement(App$Spacer, {}), "Pilots", React.createElement(CompTabs$RescriptReactIntro.make, {}));
           }
           break;
       case "settings" :
           if (match$3.tl) {
             exit = 1;
           } else {
-            component = React.createElement("div", undefined, React.createElement(CompHeader$RescriptReactIntro.make, {
+            component = React.createElement("div", undefined, React.createElement(App$Spacer, {}), React.createElement(CompHeader$RescriptReactIntro.make, {
                       comp: comp,
                       nominals: nominals
-                    }), "Settings", React.createElement(CompTabs$RescriptReactIntro.make, {}));
+                    }), React.createElement(App$Spacer, {}), React.createElement(App$Breadcrumb, {
+                      compName: comp.compName
+                    }), React.createElement(App$Spacer, {}), "Settings", React.createElement(CompTabs$RescriptReactIntro.make, {}));
           }
           break;
       default:
@@ -122,12 +153,14 @@ function App(Props) {
   if (exit === 1) {
     component = React.createElement("div", undefined, "Route not found");
   }
-  return React.createElement("div", undefined, component, "comp url: " + compUrl);
+  return React.createElement("div", undefined, component);
 }
 
 var make = App;
 
 export {
+  Breadcrumb ,
+  Spacer ,
   make ,
   
 }

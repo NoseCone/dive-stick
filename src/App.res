@@ -1,5 +1,25 @@
 %%raw(`import './site.css';`)
 
+module Breadcrumb = {
+  @react.component
+  let make = (~compName: string) => {
+    <nav className="breadcrumb">
+    <ul>
+    <li><a href="/"> {React.string("Dive Stick (Rescript)")} </a></li>
+    <li className="is-active"> {React.string(compName)} </li>
+    </ul>
+    </nav>
+  }
+}
+
+module Spacer = {
+  @react.component
+  let make = () => {
+    <div className="spacer">
+    </div>
+  }
+}
+
 @react.component
 let make = () => {
   let url = RescriptReactRouter.useUrl()
@@ -32,12 +52,41 @@ let make = () => {
   let component = switch url.path {
   | list{"comp-prefix", _compPrefix} => <div />
   | list{"settings"} =>
-    <div> <CompHeader comp={comp} nominals={nominals} /> {React.string("Settings")} <CompTabs /> </div>
-  | list{"comp"} => <div> <CompHeader comp={comp} nominals={nominals} /> {React.string("Tasks")} <CompTabs /> </div>
-  | list{"pilots"} => <div> <CompHeader comp={comp} nominals={nominals} /> {React.string("Pilots")} <CompTabs /> </div>
+    <div>
+      <Spacer />
+      <CompHeader comp={comp} nominals={nominals} />
+      <Spacer />
+      <Breadcrumb compName={comp.compName} />
+      <Spacer />
+      {React.string("Settings")}
+      <CompTabs />
+    </div>
+
+  | list{"comp"} =>
+    <div>
+      <Spacer />
+      <CompHeader comp={comp} nominals={nominals} />
+      <Spacer />
+      <Breadcrumb compName={comp.compName} />
+      <Spacer />
+      {React.string("Tasks")}
+      <CompTabs />
+      </div>
+
+  | list{"pilots"} =>
+    <div>
+      <Spacer />
+      <CompHeader comp={comp} nominals={nominals} />
+      <Spacer />
+      <Breadcrumb compName={comp.compName} />
+      <Spacer />
+      {React.string("Pilots")}
+      <CompTabs /> </div>
+
   | list{} => <Comps />
+
   | _ => <div> {React.string("Route not found")} </div>
   }
 
-  <div> {component} {React.string("comp url: " ++ compUrl)} </div>
+  <div> {component} </div>
 }
