@@ -1,13 +1,11 @@
-%%raw(`import './site.css';`)
-
 module Breadcrumb = {
   @react.component
   let make = (~compName: string) => {
     <nav className="breadcrumb">
-    <ul>
-    <li><a href="/"> {React.string("Dive Stick (Rescript)")} </a></li>
-    <li className="is-active"> {React.string(compName)} </li>
-    </ul>
+      <ul>
+        <li><a href="/"> {React.string("Dive Stick (Rescript)")} </a></li>
+        <li className="is-active"> {React.string(compName)} </li>
+      </ul>
     </nav>
   }
 }
@@ -57,8 +55,6 @@ let make = () => {
       <CompHeader comp={comp} nominals={nominals} />
       <Spacer />
       <Breadcrumb compName={comp.compName} />
-      <Spacer />
-      {React.string("Settings")}
       <CompTabs />
     </div>
 
@@ -68,8 +64,6 @@ let make = () => {
       <CompHeader comp={comp} nominals={nominals} />
       <Spacer />
       <Breadcrumb compName={comp.compName} />
-      <Spacer />
-      {React.string("Tasks")}
       <CompTabs />
       </div>
 
@@ -79,8 +73,6 @@ let make = () => {
       <CompHeader comp={comp} nominals={nominals} />
       <Spacer />
       <Breadcrumb compName={comp.compName} />
-      <Spacer />
-      {React.string("Pilots")}
       <CompTabs /> </div>
 
   | list{} => <Comps />
@@ -88,5 +80,5 @@ let make = () => {
   | _ => <div> {React.string("Route not found")} </div>
   }
 
-  <div> {component} </div>
+  {component}
 }

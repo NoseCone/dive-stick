@@ -7,19 +7,14 @@ function CompTabs$Tab(Props) {
   var name = Props.name;
   var selected = Props.selected;
   var linkTo = Props.linkTo;
-  var style = selected === name ? ({
-        backgroundColor: "#656565",
-        padding: "1ex"
-      }) : ({
-        backgroundColor: "#efefef",
-        padding: "1ex"
-      });
-  return React.createElement("div", {
-              style: style,
-              onClick: (function (param) {
-                  return RescriptReactRouter.push(linkTo);
-                })
-            }, name);
+  var c = selected === name ? "is-active" : "";
+  return React.createElement("li", {
+              className: c
+            }, React.createElement("a", {
+                  onClick: (function (param) {
+                      return RescriptReactRouter.push(linkTo);
+                    })
+                }, name));
 }
 
 var Tab = {
@@ -42,29 +37,26 @@ function CompTabs(Props) {
           selected = "Settings";
           break;
       default:
-        selected = "Home";
+        selected = "";
     }
   } else {
-    selected = "Home";
+    selected = "";
   }
   return React.createElement("div", {
-              style: {
-                display: "flex",
-                justifyContent: "center"
-              }
-            }, React.createElement(CompTabs$Tab, {
-                  name: "Settings",
-                  selected: selected,
-                  linkTo: "/settings"
-                }), React.createElement(CompTabs$Tab, {
-                  name: "Tasks",
-                  selected: selected,
-                  linkTo: "/comp"
-                }), React.createElement(CompTabs$Tab, {
-                  name: "Pilots",
-                  selected: selected,
-                  linkTo: "/pilots"
-                }));
+              className: "tabs"
+            }, React.createElement("ul", undefined, React.createElement(CompTabs$Tab, {
+                      name: "Settings",
+                      selected: selected,
+                      linkTo: "/settings"
+                    }), React.createElement(CompTabs$Tab, {
+                      name: "Tasks",
+                      selected: selected,
+                      linkTo: "/comp"
+                    }), React.createElement(CompTabs$Tab, {
+                      name: "Pilots",
+                      selected: selected,
+                      linkTo: "/pilots"
+                    })));
 }
 
 var make = CompTabs;

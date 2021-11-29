@@ -8,9 +8,6 @@ import * as Types$RescriptReactIntro from "./Types.bs.js";
 import * as CompTabs$RescriptReactIntro from "./CompTabs.bs.js";
 import * as CompHeader$RescriptReactIntro from "./CompHeader.bs.js";
 
-import './site.css';
-;
-
 function App$Breadcrumb(Props) {
   var compName = Props.compName;
   return React.createElement("nav", {
@@ -96,64 +93,32 @@ function App(Props) {
         setNominals
       ]);
   var match$3 = url.path;
-  var component;
-  var exit = 0;
-  if (match$3) {
-    switch (match$3.hd) {
-      case "comp" :
-          if (match$3.tl) {
-            exit = 1;
-          } else {
-            component = React.createElement("div", undefined, React.createElement(App$Spacer, {}), React.createElement(CompHeader$RescriptReactIntro.make, {
-                      comp: comp,
-                      nominals: nominals
-                    }), React.createElement(App$Spacer, {}), React.createElement(App$Breadcrumb, {
-                      compName: comp.compName
-                    }), React.createElement(App$Spacer, {}), "Tasks", React.createElement(CompTabs$RescriptReactIntro.make, {}));
-          }
-          break;
-      case "comp-prefix" :
-          var match$4 = match$3.tl;
-          if (match$4 && !match$4.tl) {
-            component = React.createElement("div", undefined);
-          } else {
-            exit = 1;
-          }
-          break;
-      case "pilots" :
-          if (match$3.tl) {
-            exit = 1;
-          } else {
-            component = React.createElement("div", undefined, React.createElement(App$Spacer, {}), React.createElement(CompHeader$RescriptReactIntro.make, {
-                      comp: comp,
-                      nominals: nominals
-                    }), React.createElement(App$Spacer, {}), React.createElement(App$Breadcrumb, {
-                      compName: comp.compName
-                    }), React.createElement(App$Spacer, {}), "Pilots", React.createElement(CompTabs$RescriptReactIntro.make, {}));
-          }
-          break;
-      case "settings" :
-          if (match$3.tl) {
-            exit = 1;
-          } else {
-            component = React.createElement("div", undefined, React.createElement(App$Spacer, {}), React.createElement(CompHeader$RescriptReactIntro.make, {
-                      comp: comp,
-                      nominals: nominals
-                    }), React.createElement(App$Spacer, {}), React.createElement(App$Breadcrumb, {
-                      compName: comp.compName
-                    }), React.createElement(App$Spacer, {}), "Settings", React.createElement(CompTabs$RescriptReactIntro.make, {}));
-          }
-          break;
-      default:
-        exit = 1;
-    }
-  } else {
-    component = React.createElement(Comps$RescriptReactIntro.make, {});
+  if (!match$3) {
+    return React.createElement(Comps$RescriptReactIntro.make, {});
   }
-  if (exit === 1) {
-    component = React.createElement("div", undefined, "Route not found");
+  switch (match$3.hd) {
+    case "comp-prefix" :
+        var match$4 = match$3.tl;
+        if (match$4 && !match$4.tl) {
+          return React.createElement("div", undefined);
+        }
+        break;
+    case "comp" :
+    case "pilots" :
+    case "settings" :
+        if (!match$3.tl) {
+          return React.createElement("div", undefined, React.createElement(App$Spacer, {}), React.createElement(CompHeader$RescriptReactIntro.make, {
+                          comp: comp,
+                          nominals: nominals
+                        }), React.createElement(App$Spacer, {}), React.createElement(App$Breadcrumb, {
+                          compName: comp.compName
+                        }), React.createElement(CompTabs$RescriptReactIntro.make, {}));
+        }
+        break;
+    default:
+      
   }
-  return React.createElement("div", undefined, component);
+  return React.createElement("div", undefined, "Route not found");
 }
 
 var make = App;
@@ -164,4 +129,4 @@ export {
   make ,
   
 }
-/*  Not a pure module */
+/* react Not a pure module */

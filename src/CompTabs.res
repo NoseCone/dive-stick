@@ -1,13 +1,13 @@
 module Tab = {
   @react.component
   let make = (~name: string, ~selected: string, ~linkTo: string) => {
-    let style = if selected == name {
-      ReactDOM.Style.make(~backgroundColor="#656565", ~padding="1ex", ())
+    let c = if selected == name {
+      "is-active"
     } else {
-      ReactDOM.Style.make(~backgroundColor="#efefef", ~padding="1ex", ())
+      ""
     }
 
-    <div style={style} onClick={_ => RescriptReactRouter.push(linkTo)}> {React.string(name)} </div>
+    <li className=c ><a onClick={_ => RescriptReactRouter.push(linkTo)}> {React.string(name)} </a></li>
   }
 }
 
@@ -19,12 +19,14 @@ let make = () => {
   | list{"settings", ..._} => "Settings"
   | list{"comp", ..._} => "Tasks"
   | list{"pilots", ..._} => "Pilots"
-  | _ => "Home"
+  | _ => ""
   }
 
-  <div style={ReactDOM.Style.make(~display="flex", ~justifyContent="center", ())}>
-    <Tab name="Settings" selected={selected} linkTo="/settings" />
-    <Tab name="Tasks" selected={selected} linkTo="/comp" />
-    <Tab name="Pilots" selected={selected} linkTo="/pilots" />
+  <div className="tabs">
+    <ul>
+      <Tab name="Settings" selected={selected} linkTo="/settings" />
+      <Tab name="Tasks" selected={selected} linkTo="/comp" />
+      <Tab name="Pilots" selected={selected} linkTo="/pilots" />
+    </ul>
   </div>
 }

@@ -6,7 +6,7 @@ import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import ReportWebVitals from "./reportWebVitals";
 import * as App$RescriptReactIntro from "./App.bs.js";
 
-import './index.css';
+import './site.css';
 ;
 
 function reportWebVitals(prim) {

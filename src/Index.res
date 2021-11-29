@@ -1,4 +1,4 @@
-%%raw(`import './index.css';`)
+%%raw(`import './site.css';`)
 @module("./reportWebVitals") external reportWebVitals: unit => unit = "default"
 
 let root = ReactDOM.querySelector("#rescript")
