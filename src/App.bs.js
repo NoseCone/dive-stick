@@ -50,20 +50,7 @@ function App(Props) {
         setCompUrl
       ]);
   React.useEffect((function () {
-          console.log("compUrl: " + compUrl);
-          if (haveCompUrl) {
-            var dataUrl = compUrl + "/comp-input/comps.json";
-            console.log("fetching JSON from: " + dataUrl);
-            var __x = fetch(dataUrl);
-            var __x$1 = __x.then(function (prim) {
-                  return prim.json();
-                });
-            __x$1.then(function (obj) {
-                  return Promise.resolve((console.log("got COMP:", obj), Curry._1(setComp, (function (param) {
-                                      return obj;
-                                    }))));
-                });
-          }
+          Types$RescriptReactIntro.getComp(haveCompUrl, compUrl, setComp);
           
         }), [
         haveCompUrl,

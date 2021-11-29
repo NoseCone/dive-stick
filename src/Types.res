@@ -27,3 +27,17 @@ let nullComp = {
   earthMath: "",
   give: {giveDistance: None, giveFraction: 0.0},
 }
+
+external unsafeCastComp: Js.Json.t => comp = "%identity"
+
+let getComp = (~haveUrl: bool, ~url: string, ~set: (comp => comp) => unit) => {
+    if (haveUrl) {
+        let dataUrl = `${url}/comp-input/comps.json`
+        dataUrl->Fetch.fetch->Js.Promise.then_(Fetch.Response.json, _)->Js.Promise.then_(x => {
+            x
+            ->unsafeCastComp
+            ->(c => set(_ => c))
+            ->Js.Promise.resolve
+        }, _) |> ignore
+    }
+  }

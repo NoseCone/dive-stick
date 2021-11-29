@@ -1,7 +1,5 @@
 %%raw(`import './site.css';`)
 
-external unsafeCastComp: Js.Json.t => Types.comp = "%identity"
-
 @react.component
 let make = () => {
   let url = RescriptReactRouter.useUrl()
@@ -21,17 +19,7 @@ let make = () => {
   }, (url, setCompUrl))
 
   React.useEffect3(() => {
-    Js.log(`compUrl: ${compUrl}`)
-    if haveCompUrl {
-      let dataUrl = `${compUrl}/comp-input/comps.json`
-      Js.log(`fetching JSON from: ${dataUrl}`)
-      dataUrl->Fetch.fetch->Js.Promise.then_(Fetch.Response.json, _)->Js.Promise.then_(obj => {
-        obj->unsafeCastComp->((c: Types.comp) => {
-          Js.log2("got COMP:", c)
-          setComp(_ => c)
-          })->Js.Promise.resolve
-      }, _) |> ignore
-    }
+    Types.getComp(~haveUrl = haveCompUrl, ~url = compUrl, ~set = setComp)
     None
   }, (haveCompUrl, compUrl, setComp))
 
