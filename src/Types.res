@@ -44,15 +44,14 @@ let nullNominals = {
   goal: 0.0
 }
 
-external unsafeCastComp: Js.Json.t => comp = "%identity"
-external unsafeCastNominals: Js.Json.t => nominals = "%identity"
+external unsafeCast: Js.Json.t => 'a = "%identity"
 
 let getComp = (~haveUrl: bool, ~url: string, ~set: (comp => comp) => unit) => {
     if (haveUrl) {
         let dataUrl = `${url}/comp-input/comps.json`
         dataUrl->Fetch.fetch->Js.Promise.then_(Fetch.Response.json, _)->Js.Promise.then_(x => {
             x
-            ->unsafeCastComp
+            ->unsafeCast
             ->(c => set(_ => c))
             ->Js.Promise.resolve
         }, _) |> ignore
@@ -64,7 +63,7 @@ let getNominals = (~haveUrl: bool, ~url: string, ~set: (nominals => nominals) =>
         let dataUrl = `${url}/comp-input/nominals.json`
         dataUrl->Fetch.fetch->Js.Promise.then_(Fetch.Response.json, _)->Js.Promise.then_(x => {
             x
-            ->unsafeCastNominals
+            ->unsafeCast
             ->(n => set(_ => n))
             ->Js.Promise.resolve
         }, _) |> ignore
