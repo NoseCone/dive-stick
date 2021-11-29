@@ -6,6 +6,14 @@ function compSlug(comp) {
   return comp.from + " to " + comp.to + ", " + comp.location;
 }
 
+var nullPilotStatus_pilotStatus = [];
+
+var nullPilotStatus = {
+  pilotId: "",
+  pilotName: "",
+  pilotStatus: nullPilotStatus_pilotStatus
+};
+
 function getComp(haveUrl, url, set) {
   if (!haveUrl) {
     return ;
@@ -117,12 +125,6 @@ var nullNominals = {
   distance: "",
   time: "",
   goal: 0.0
-};
-
-var nullPilotStatus = {
-  pilotId: "",
-  pilotName: "",
-  pilotStatus: /* [] */0
 };
 
 export {

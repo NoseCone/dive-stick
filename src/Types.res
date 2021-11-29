@@ -47,7 +47,7 @@ let nullNominals = {
 type taskLength = string
 type rawZone = {zoneName: string}
 type stopped = {announced: string, retroactive: string}
-type rawZones = {raw: list<rawZone>}
+type rawZones = {raw: array<rawZone>}
 
 type task = {
   taskName: string,
@@ -59,13 +59,13 @@ type task = {
 type pilotStatus = {
   pilotId: string,
   pilotName: string,
-  pilotStatus: list<string>,
+  pilotStatus: array<string>,
 }
 
 let nullPilotStatus = {
   pilotId: "",
   pilotName: "",
-  pilotStatus: list{}
+  pilotStatus: [],
 }
 
 external unsafeCast: Js.Json.t => 'a = "%identity"
@@ -91,7 +91,7 @@ let getNominals = (~haveUrl: bool, ~url: string, ~set: (nominals => nominals) =>
 let getTaskLengths = (
   ~haveUrl: bool,
   ~url: string,
-  ~set: (list<taskLength> => list<taskLength>) => unit,
+  ~set: (array<taskLength> => array<taskLength>) => unit,
 ) => {
   if haveUrl {
     let dataUrl = `${url}/task-length/task-lengths.json`
@@ -101,7 +101,7 @@ let getTaskLengths = (
   }
 }
 
-let getCompTasks = (~haveUrl: bool, ~url: string, ~set: (list<task> => list<task>) => unit) => {
+let getCompTasks = (~haveUrl: bool, ~url: string, ~set: (array<task> => array<task>) => unit) => {
   if haveUrl {
     let dataUrl = `${url}/comp-input/tasks.json`
     dataUrl->Fetch.fetch->Js.Promise.then_(Fetch.Response.json, _)->Js.Promise.then_(x => {
@@ -110,7 +110,11 @@ let getCompTasks = (~haveUrl: bool, ~url: string, ~set: (list<task> => list<task
   }
 }
 
-let getCompPilots = (~haveUrl: bool, ~url: string, ~set: (list<pilotStatus> => list<pilotStatus>) => unit) => {
+let getCompPilots = (
+  ~haveUrl: bool,
+  ~url: string,
+  ~set: (array<pilotStatus> => array<pilotStatus>) => unit,
+) => {
   if haveUrl {
     let dataUrl = `${url}/gap-point/pilots-status.json`
     dataUrl->Fetch.fetch->Js.Promise.then_(Fetch.Response.json, _)->Js.Promise.then_(x => {

@@ -53,6 +53,14 @@ function App(Props) {
       });
   var setNominals = match$2[1];
   var nominals = match$2[0];
+  var match$3 = React.useState(function () {
+        return [];
+      });
+  var setTaskLengths = match$3[1];
+  var match$4 = React.useState(function () {
+        return [];
+      });
+  var setCompTasks = match$4[1];
   var haveCompUrl = compUrl !== "";
   React.useEffect((function () {
           var match = url.path;
@@ -95,29 +103,48 @@ function App(Props) {
         compUrl,
         setNominals
       ]);
-  var match$3 = url.path;
-  if (!match$3) {
+  React.useEffect((function () {
+          Types$RescriptReactIntro.getTaskLengths(haveCompUrl, compUrl, setTaskLengths);
+          
+        }), [
+        haveCompUrl,
+        compUrl,
+        setTaskLengths
+      ]);
+  React.useEffect((function () {
+          Types$RescriptReactIntro.getCompTasks(haveCompUrl, compUrl, setCompTasks);
+          
+        }), [
+        haveCompUrl,
+        compUrl,
+        setCompTasks
+      ]);
+  var match$5 = url.path;
+  if (!match$5) {
     return React.createElement(Comps$RescriptReactIntro.make, {});
   }
-  switch (match$3.hd) {
+  switch (match$5.hd) {
     case "comp" :
-        if (!match$3.tl) {
+        if (!match$5.tl) {
           return React.createElement("div", undefined, React.createElement(App$Spacer, {}), React.createElement(CompHeader$RescriptReactIntro.make, {
                           comp: comp,
                           nominals: nominals
                         }), React.createElement(App$Spacer, {}), React.createElement(App$Breadcrumb, {
                           compName: comp.compName
-                        }), React.createElement(CompTabs$RescriptReactIntro.make, {}), React.createElement(CompTasks$RescriptReactIntro.make, {}));
+                        }), React.createElement(CompTabs$RescriptReactIntro.make, {}), React.createElement(CompTasks$RescriptReactIntro.make, {
+                          tasks: match$4[0],
+                          taskLengths: match$3[0]
+                        }));
         }
         break;
     case "comp-prefix" :
-        var match$4 = match$3.tl;
-        if (match$4 && !match$4.tl) {
+        var match$6 = match$5.tl;
+        if (match$6 && !match$6.tl) {
           return React.createElement("div", undefined);
         }
         break;
     case "pilots" :
-        if (!match$3.tl) {
+        if (!match$5.tl) {
           return React.createElement("div", undefined, React.createElement(App$Spacer, {}), React.createElement(CompHeader$RescriptReactIntro.make, {
                           comp: comp,
                           nominals: nominals
@@ -127,7 +154,7 @@ function App(Props) {
         }
         break;
     case "settings" :
-        if (!match$3.tl) {
+        if (!match$5.tl) {
           return React.createElement("div", undefined, React.createElement(App$Spacer, {}), React.createElement(CompHeader$RescriptReactIntro.make, {
                           comp: comp,
                           nominals: nominals

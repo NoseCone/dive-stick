@@ -8,11 +8,13 @@ type taskRow = {
   cancelled: bool,
 }
 
-let mkTaskRows = (tasks: list<task>, taskLengths: list<taskLength>): list<taskRow> =>
-  Belt.List.zipBy(tasks, taskLengths, ({taskName: t, zones: zs, stopped: s, cancelled: c}, d) => {
+let mkBool = (s: string, x) => if x {s} else {""}
+
+let mkTaskRows = (tasks: array<task>, taskLengths: array<taskLength>): array<taskRow> =>
+  Belt.Array.zipBy(tasks, taskLengths, ({taskName: t, zones: zs, stopped: s, cancelled: c}, d) => {
     {
       taskName: t,
-      tps: Js.String2.concatMany("-", Belt.List.toArray(Belt.List.map(zs.raw, z => z.zoneName))),
+      tps: Js.Array.joinWith("-", Belt.Array.map(zs.raw, z => z.zoneName)),
       distance: d,
       stopped: if Belt.Option.isSome(s) {
         true
@@ -25,8 +27,37 @@ let mkTaskRows = (tasks: list<task>, taskLengths: list<taskLength>): list<taskRo
 
 let s = React.string
 
+module TaskRow = {
+    @react.component
+    let make = (~row: taskRow) => {
+        <tr>
+          <td>
+            {s("1")}
+          </td>
+          <td className="td-task-name">
+            {s(row.taskName)}
+          </td>
+          <td className="td-task-tps">
+            {s(row.tps)}
+          </td>
+          <td className="td-task-dist">
+            {s(row.distance)}
+          </td>
+          <td className="td-task-stopped">
+            {s(mkBool("STOPPED", row.stopped))}
+          </td>
+          <td className="td-task-cancelled">
+            {s(mkBool("CANCELLED", row.cancelled))}
+          </td>
+        </tr>
+    }
+}
+
 @react.component
-let make = () => {
+let make = (~tasks: array<task>, ~taskLengths: array<taskLength>) => {
+    let xs =
+        mkTaskRows(tasks, taskLengths)
+        ->Belt.Array.map(row => <TaskRow row={row} />)
   <>
     <table className="table is-striped">
       <thead>
@@ -51,98 +82,7 @@ let make = () => {
           </th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>
-            {s("1")}
-          </td>
-          <td className="td-task-name">
-            {s("day one")}
-          </td>
-          <td className="td-task-tps">
-            {s("1DALBY-JANDOW-WARRA-1DALBY")}
-          </td>
-          <td className="td-task-dist">
-            {s("99.561444 km")}
-          </td>
-          <td className="td-task-stopped">
-          </td>
-          <td className="td-task-cancelled">
-          </td>
-        </tr>
-        <tr>
-          <td>
-            {s("1")}
-          </td>
-          <td className="td-task-name">
-            {s("day four T2")}
-          </td>
-          <td className="td-task-tps">
-            {s("1DALBY-MACALI-JIMBOU-WARRA-JANDOW-BRIGAL")}
-          </td>
-          <td className="td-task-dist">
-            {s("111.259762 km")}
-          </td>
-          <td className="td-task-stopped">
-          </td>
-          <td className="td-task-cancelled">
-          </td>
-        </tr>
-        <tr>
-          <td>
-            {s("1")}
-          </td>
-          <td className="td-task-name">
-            {s("day five")}
-          </td>
-          <td className="td-task-tps">
-            {s("1DALBY-BRIGAL-IRON-1DALBY")}
-          </td>
-          <td className="td-task-dist">
-            {s("96.889354 km")}
-          </td>
-          <td className="td-task-stopped">
-          </td>
-          <td className="td-task-cancelled">
-          </td>
-        </tr>
-        <tr>
-          <td>
-            {s("1")}
-          </td>
-          <td className="td-task-name">
-            {s("day six")}
-          </td>
-          <td className="td-task-tps">
-            {s("1DALBY-WARRA-BELL-1DALBY")}
-          </td>
-          <td className="td-task-dist">
-            {s("114.373717 km")}
-          </td>
-          <td className="td-task-stopped">
-          </td>
-          <td className="td-task-cancelled">
-          </td>
-        </tr>
-        <tr>
-          <td>
-            {s("1")}
-          </td>
-          <td className="td-task-name">
-            {s("day seven")}
-          </td>
-          <td className="td-task-tps">
-            {s("1DALBY-BROADW-JIMBOU-MACALI-1DALBY")}
-          </td>
-          <td className="td-task-dist">
-            {s("88.969527 km")}
-          </td>
-          <td className="td-task-stopped">
-          </td>
-          <td className="td-task-cancelled">
-          </td>
-        </tr>
-      </tbody>
+      <tbody> {React.array(xs)} </tbody>
     </table>
   </>
 }
