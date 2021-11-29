@@ -55,6 +55,7 @@ let make = () => {
       <Spacer />
       <Breadcrumb compName={comp.compName} />
       <CompTabs />
+      <CompSettings />
     </div>
 
   | list{"comp"} =>
@@ -74,6 +75,7 @@ let make = () => {
       <Spacer />
       <Breadcrumb compName={comp.compName} />
       <CompTabs />
+      <CompPilots />
     </div>
 
   | list{} => <Comps />

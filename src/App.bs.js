@@ -8,6 +8,8 @@ import * as Types$RescriptReactIntro from "./Types.bs.js";
 import * as CompTabs$RescriptReactIntro from "./CompTabs.bs.js";
 import * as CompTasks$RescriptReactIntro from "./CompTasks.bs.js";
 import * as CompHeader$RescriptReactIntro from "./CompHeader.bs.js";
+import * as CompPilots$RescriptReactIntro from "./CompPilots.bs.js";
+import * as CompSettings$RescriptReactIntro from "./CompSettings.bs.js";
 
 function App$Breadcrumb(Props) {
   var compName = Props.compName;
@@ -115,6 +117,15 @@ function App(Props) {
         }
         break;
     case "pilots" :
+        if (!match$3.tl) {
+          return React.createElement("div", undefined, React.createElement(App$Spacer, {}), React.createElement(CompHeader$RescriptReactIntro.make, {
+                          comp: comp,
+                          nominals: nominals
+                        }), React.createElement(App$Spacer, {}), React.createElement(App$Breadcrumb, {
+                          compName: comp.compName
+                        }), React.createElement(CompTabs$RescriptReactIntro.make, {}), React.createElement(CompPilots$RescriptReactIntro.make, {}));
+        }
+        break;
     case "settings" :
         if (!match$3.tl) {
           return React.createElement("div", undefined, React.createElement(App$Spacer, {}), React.createElement(CompHeader$RescriptReactIntro.make, {
@@ -122,7 +133,7 @@ function App(Props) {
                           nominals: nominals
                         }), React.createElement(App$Spacer, {}), React.createElement(App$Breadcrumb, {
                           compName: comp.compName
-                        }), React.createElement(CompTabs$RescriptReactIntro.make, {}));
+                        }), React.createElement(CompTabs$RescriptReactIntro.make, {}), React.createElement(CompSettings$RescriptReactIntro.make, {}));
         }
         break;
     default:
