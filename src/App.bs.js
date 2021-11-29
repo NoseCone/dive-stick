@@ -31,13 +31,25 @@ function App(Props) {
           if (match$1.tl) {
             return ;
           }
-          var compPrefix = match$1.hd;
+          var compUrl$p = "http://" + match$1.hd + ".flaretiming.com/json";
           Curry._1(setCompUrl, (function (param) {
-                  return "http://" + compPrefix + ".faretiming.com/json";
+                  return compUrl$p;
                 }));
+          var data = compUrl$p + "/comp-input/comps.json";
+          console.log("JSON", data);
+          var __x = fetch(data);
+          var __x$1 = __x.then(function (prim) {
+                return prim.json();
+              });
+          __x$1.then(function (obj) {
+                return Promise.resolve((console.log("COMP", obj), undefined));
+              });
           RescriptReactRouter.push("/comp");
           
-        }), [url]);
+        }), [
+        url,
+        setCompUrl
+      ]);
   var match$1 = url.path;
   var component;
   var exit = 0;
