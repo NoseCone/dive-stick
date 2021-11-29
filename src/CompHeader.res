@@ -41,13 +41,17 @@ let make = (~comp: Types.comp, ~nominals: Types.nominals) => {
                   <div className="control">
                     <div className="tags has-addons">
                       <span className="tag"> {s("nominal goal")} </span>
-                      <span className="tag is-primary"> {s(Belt.Float.toString(nominals.goal))} </span>
+                      <span className="tag is-primary">
+                        {s(Belt.Float.toString(nominals.goal))}
+                      </span>
                     </div>
                   </div>
                   <div className="control">
                     <div className="tags has-addons">
                       <span className="tag"> {s("score-back time")} </span>
-                      <span className="tag is-danger"> {s(Belt.Option.getWithDefault(comp.scoreBack, ""))} </span>
+                      <span className="tag is-danger">
+                        {s(Belt.Option.getWithDefault(comp.scoreBack, ""))}
+                      </span>
                     </div>
                   </div>
                 </div>

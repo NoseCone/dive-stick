@@ -4,8 +4,8 @@
 let root = ReactDOM.querySelector("#rescript")
 
 switch root {
-  | None => ()
-  | Some(root) => ReactDOM.render(<App />, root)
+| None => ()
+| Some(root) => ReactDOM.render(<App />, root)
 }
 
 reportWebVitals()

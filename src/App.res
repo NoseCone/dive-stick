@@ -3,7 +3,7 @@ module Breadcrumb = {
   let make = (~compName: string) => {
     <nav className="breadcrumb">
       <ul>
-        <li><a href="/"> {React.string("Dive Stick (Rescript)")} </a></li>
+        <li> <a href="/"> {React.string("Dive Stick (Rescript)")} </a> </li>
         <li className="is-active"> {React.string(compName)} </li>
       </ul>
     </nav>
@@ -13,8 +13,7 @@ module Breadcrumb = {
 module Spacer = {
   @react.component
   let make = () => {
-    <div className="spacer">
-    </div>
+    <div className="spacer" />
   }
 }
 
@@ -38,12 +37,12 @@ let make = () => {
   }, (url, setCompUrl))
 
   React.useEffect3(() => {
-    Types.getComp(~haveUrl = haveCompUrl, ~url = compUrl, ~set = setComp)
+    Types.getComp(~haveUrl=haveCompUrl, ~url=compUrl, ~set=setComp)
     None
   }, (haveCompUrl, compUrl, setComp))
 
   React.useEffect3(() => {
-    Types.getNominals(~haveUrl = haveCompUrl, ~url = compUrl, ~set = setNominals)
+    Types.getNominals(~haveUrl=haveCompUrl, ~url=compUrl, ~set=setNominals)
     None
   }, (haveCompUrl, compUrl, setNominals))
 
@@ -65,7 +64,7 @@ let make = () => {
       <Spacer />
       <Breadcrumb compName={comp.compName} />
       <CompTabs />
-      </div>
+    </div>
 
   | list{"pilots"} =>
     <div>
@@ -73,7 +72,8 @@ let make = () => {
       <CompHeader comp={comp} nominals={nominals} />
       <Spacer />
       <Breadcrumb compName={comp.compName} />
-      <CompTabs /> </div>
+      <CompTabs />
+    </div>
 
   | list{} => <Comps />
 

@@ -7,7 +7,9 @@ module Tab = {
       ""
     }
 
-    <li className=c ><a onClick={_ => RescriptReactRouter.push(linkTo)}> {React.string(name)} </a></li>
+    <li className=c>
+      <a onClick={_ => RescriptReactRouter.push(linkTo)}> {React.string(name)} </a>
+    </li>
   }
 }
 
