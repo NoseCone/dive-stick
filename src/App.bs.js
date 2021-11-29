@@ -6,6 +6,7 @@ import * as RescriptReactRouter from "@rescript/react/src/RescriptReactRouter.bs
 import * as Comps$RescriptReactIntro from "./Comps.bs.js";
 import * as Types$RescriptReactIntro from "./Types.bs.js";
 import * as CompTabs$RescriptReactIntro from "./CompTabs.bs.js";
+import * as CompTasks$RescriptReactIntro from "./CompTasks.bs.js";
 import * as CompHeader$RescriptReactIntro from "./CompHeader.bs.js";
 
 function App$Breadcrumb(Props) {
@@ -97,13 +98,22 @@ function App(Props) {
     return React.createElement(Comps$RescriptReactIntro.make, {});
   }
   switch (match$3.hd) {
+    case "comp" :
+        if (!match$3.tl) {
+          return React.createElement("div", undefined, React.createElement(App$Spacer, {}), React.createElement(CompHeader$RescriptReactIntro.make, {
+                          comp: comp,
+                          nominals: nominals
+                        }), React.createElement(App$Spacer, {}), React.createElement(App$Breadcrumb, {
+                          compName: comp.compName
+                        }), React.createElement(CompTabs$RescriptReactIntro.make, {}), React.createElement(CompTasks$RescriptReactIntro.make, {}));
+        }
+        break;
     case "comp-prefix" :
         var match$4 = match$3.tl;
         if (match$4 && !match$4.tl) {
           return React.createElement("div", undefined);
         }
         break;
-    case "comp" :
     case "pilots" :
     case "settings" :
         if (!match$3.tl) {

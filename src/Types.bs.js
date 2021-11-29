@@ -40,6 +40,40 @@ function getNominals(haveUrl, url, set) {
   
 }
 
+function getTaskLengths(haveUrl, url, set) {
+  if (!haveUrl) {
+    return ;
+  }
+  var dataUrl = url + "/task-length/task-lengths.json";
+  var __x = fetch(dataUrl);
+  var __x$1 = __x.then(function (prim) {
+        return prim.json();
+      });
+  __x$1.then(function (x) {
+        return Promise.resolve(Curry._1(set, (function (param) {
+                          return x;
+                        })));
+      });
+  
+}
+
+function getCompTasks(haveUrl, url, set) {
+  if (!haveUrl) {
+    return ;
+  }
+  var dataUrl = url + "/comp-input/tasks.json";
+  var __x = fetch(dataUrl);
+  var __x$1 = __x.then(function (prim) {
+        return prim.json();
+      });
+  __x$1.then(function (x) {
+        return Promise.resolve(Curry._1(set, (function (param) {
+                          return x;
+                        })));
+      });
+  
+}
+
 var nullComp = {
   compName: "",
   scoreBack: undefined,
@@ -74,6 +108,8 @@ export {
   nullNominals ,
   getComp ,
   getNominals ,
+  getTaskLengths ,
+  getCompTasks ,
   
 }
 /* No side effect */

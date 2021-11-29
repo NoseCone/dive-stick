@@ -44,6 +44,18 @@ let nullNominals = {
   goal: 0.0,
 }
 
+type taskLength = string
+type rawZone = {zoneName: string}
+type stopped = {announced: string, retroactive: string}
+type rawZones = {raw: list<rawZone>}
+
+type task = {
+  taskName: string,
+  zones: rawZones,
+  stopped: option<stopped>,
+  cancelled: option<bool>
+}
+
 external unsafeCast: Js.Json.t => 'a = "%identity"
 
 let getComp = (~haveUrl: bool, ~url: string, ~set: (comp => comp) => unit) => {
@@ -58,6 +70,28 @@ let getComp = (~haveUrl: bool, ~url: string, ~set: (comp => comp) => unit) => {
 let getNominals = (~haveUrl: bool, ~url: string, ~set: (nominals => nominals) => unit) => {
   if haveUrl {
     let dataUrl = `${url}/comp-input/nominals.json`
+    dataUrl->Fetch.fetch->Js.Promise.then_(Fetch.Response.json, _)->Js.Promise.then_(x => {
+      x->unsafeCast->(n => set(_ => n))->Js.Promise.resolve
+    }, _) |> ignore
+  }
+}
+
+let getTaskLengths = (
+  ~haveUrl: bool,
+  ~url: string,
+  ~set: (list<taskLength> => list<taskLength>) => unit,
+) => {
+  if haveUrl {
+    let dataUrl = `${url}/task-length/task-lengths.json`
+    dataUrl->Fetch.fetch->Js.Promise.then_(Fetch.Response.json, _)->Js.Promise.then_(x => {
+      x->unsafeCast->(n => set(_ => n))->Js.Promise.resolve
+    }, _) |> ignore
+  }
+}
+
+let getCompTasks = (~haveUrl: bool, ~url: string, ~set: (list<task> => list<task>) => unit) => {
+  if haveUrl {
+    let dataUrl = `${url}/comp-input/tasks.json`
     dataUrl->Fetch.fetch->Js.Promise.then_(Fetch.Response.json, _)->Js.Promise.then_(x => {
       x->unsafeCast->(n => set(_ => n))->Js.Promise.resolve
     }, _) |> ignore
