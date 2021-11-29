@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
+import * as Types$RescriptReactIntro from "./Types.bs.js";
 
 function s(prim) {
   return prim;
@@ -9,6 +10,7 @@ function s(prim) {
 
 function CompHeader(Props) {
   var comp = Props.comp;
+  var nominals = Props.nominals;
   return React.createElement(React.Fragment, undefined, React.createElement("div", {
                   className: "container"
                 }, React.createElement("div", {
@@ -24,7 +26,7 @@ function CompHeader(Props) {
                                       className: "title is-3"
                                     }, comp.compName), React.createElement("p", {
                                       className: "title is-5"
-                                    }, "{comp.compSlug}"), React.createElement("div", {
+                                    }, Types$RescriptReactIntro.compSlug(comp)), React.createElement("div", {
                                       className: "example"
                                     }, React.createElement("div", {
                                           className: "field is-grouped is-grouped-multiline"
@@ -36,7 +38,7 @@ function CompHeader(Props) {
                                                       className: "tag"
                                                     }, "UTC offset"), React.createElement("span", {
                                                       className: "tag is-warning"
-                                                    }, "{comp.utcOffset.timeZoneMinutes}"))), React.createElement("div", {
+                                                    }, String(comp.utcOffset.timeZoneMinutes)))), React.createElement("div", {
                                               className: "control"
                                             }, React.createElement("div", {
                                                   className: "tags has-addons"
@@ -44,7 +46,7 @@ function CompHeader(Props) {
                                                       className: "tag"
                                                     }, "minimum distance"), React.createElement("span", {
                                                       className: "tag is-black"
-                                                    }, "{nominals.free}"))), React.createElement("div", {
+                                                    }, nominals.free))), React.createElement("div", {
                                               className: "control"
                                             }, React.createElement("div", {
                                                   className: "tags has-addons"
@@ -52,7 +54,7 @@ function CompHeader(Props) {
                                                       className: "tag"
                                                     }, "nominal distance"), React.createElement("span", {
                                                       className: "tag is-info"
-                                                    }, "{nominals.distance}"))), React.createElement("div", {
+                                                    }, nominals.distance))), React.createElement("div", {
                                               className: "control"
                                             }, React.createElement("div", {
                                                   className: "tags has-addons"
@@ -60,7 +62,7 @@ function CompHeader(Props) {
                                                       className: "tag"
                                                     }, "nominal time"), React.createElement("span", {
                                                       className: "tag is-success"
-                                                    }, "{nominals.time}"))), React.createElement("div", {
+                                                    }, nominals.time))), React.createElement("div", {
                                               className: "control"
                                             }, React.createElement("div", {
                                                   className: "tags has-addons"
@@ -68,7 +70,7 @@ function CompHeader(Props) {
                                                       className: "tag"
                                                     }, "nominal goal"), React.createElement("span", {
                                                       className: "tag is-primary"
-                                                    }, "{nominals.goal}"))), React.createElement("div", {
+                                                    }, String(nominals.goal)))), React.createElement("div", {
                                               className: "control"
                                             }, React.createElement("div", {
                                                   className: "tags has-addons"

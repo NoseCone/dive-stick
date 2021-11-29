@@ -2,11 +2,32 @@
 
 import * as Curry from "rescript/lib/es6/curry.js";
 
+function compSlug(comp) {
+  return comp.from + " to " + comp.to + ", " + comp.location;
+}
+
 function getComp(haveUrl, url, set) {
   if (!haveUrl) {
     return ;
   }
   var dataUrl = url + "/comp-input/comps.json";
+  var __x = fetch(dataUrl);
+  var __x$1 = __x.then(function (prim) {
+        return prim.json();
+      });
+  __x$1.then(function (x) {
+        return Promise.resolve(Curry._1(set, (function (param) {
+                          return x;
+                        })));
+      });
+  
+}
+
+function getNominals(haveUrl, url, set) {
+  if (!haveUrl) {
+    return ;
+  }
+  var dataUrl = url + "/comp-input/nominals.json";
   var __x = fetch(dataUrl);
   var __x$1 = __x.then(function (prim) {
         return prim.json();
@@ -40,9 +61,19 @@ var nullComp = {
   }
 };
 
+var nullNominals = {
+  free: "",
+  distance: "",
+  time: "",
+  goal: 0.0
+};
+
 export {
   nullComp ,
+  compSlug ,
+  nullNominals ,
   getComp ,
+  getNominals ,
   
 }
 /* No side effect */

@@ -23,6 +23,11 @@ function App(Props) {
       });
   var setComp = match$1[1];
   var comp = match$1[0];
+  var match$2 = React.useState(function () {
+        return Types$RescriptReactIntro.nullNominals;
+      });
+  var setNominals = match$2[1];
+  var nominals = match$2[0];
   var haveCompUrl = compUrl !== "";
   React.useEffect((function () {
           var match = url.path;
@@ -57,43 +62,54 @@ function App(Props) {
         compUrl,
         setComp
       ]);
-  var match$2 = url.path;
+  React.useEffect((function () {
+          Types$RescriptReactIntro.getNominals(haveCompUrl, compUrl, setNominals);
+          
+        }), [
+        haveCompUrl,
+        compUrl,
+        setNominals
+      ]);
+  var match$3 = url.path;
   var component;
   var exit = 0;
-  if (match$2) {
-    switch (match$2.hd) {
+  if (match$3) {
+    switch (match$3.hd) {
       case "comp" :
-          if (match$2.tl) {
+          if (match$3.tl) {
             exit = 1;
           } else {
             component = React.createElement("div", undefined, React.createElement(CompHeader$RescriptReactIntro.make, {
-                      comp: comp
+                      comp: comp,
+                      nominals: nominals
                     }), "Tasks", React.createElement(CompTabs$RescriptReactIntro.make, {}));
           }
           break;
       case "comp-prefix" :
-          var match$3 = match$2.tl;
-          if (match$3 && !match$3.tl) {
+          var match$4 = match$3.tl;
+          if (match$4 && !match$4.tl) {
             component = React.createElement("div", undefined);
           } else {
             exit = 1;
           }
           break;
       case "pilots" :
-          if (match$2.tl) {
+          if (match$3.tl) {
             exit = 1;
           } else {
             component = React.createElement("div", undefined, React.createElement(CompHeader$RescriptReactIntro.make, {
-                      comp: comp
+                      comp: comp,
+                      nominals: nominals
                     }), "Pilots", React.createElement(CompTabs$RescriptReactIntro.make, {}));
           }
           break;
       case "settings" :
-          if (match$2.tl) {
+          if (match$3.tl) {
             exit = 1;
           } else {
             component = React.createElement("div", undefined, React.createElement(CompHeader$RescriptReactIntro.make, {
-                      comp: comp
+                      comp: comp,
+                      nominals: nominals
                     }), "Settings", React.createElement(CompTabs$RescriptReactIntro.make, {}));
           }
           break;

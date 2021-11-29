@@ -28,7 +28,24 @@ let nullComp = {
   give: {giveDistance: None, giveFraction: 0.0},
 }
 
+let compSlug = (comp: comp) => `${comp.from} to ${comp.to}, ${comp.location}`
+
+type nominals = {
+  free: string,
+  distance: string,
+  time: string,
+  goal: float
+}
+
+let nullNominals = {
+  free: "",
+  distance: "",
+  time: "",
+  goal: 0.0
+}
+
 external unsafeCastComp: Js.Json.t => comp = "%identity"
+external unsafeCastNominals: Js.Json.t => nominals = "%identity"
 
 let getComp = (~haveUrl: bool, ~url: string, ~set: (comp => comp) => unit) => {
     if (haveUrl) {
@@ -37,6 +54,18 @@ let getComp = (~haveUrl: bool, ~url: string, ~set: (comp => comp) => unit) => {
             x
             ->unsafeCastComp
             ->(c => set(_ => c))
+            ->Js.Promise.resolve
+        }, _) |> ignore
+    }
+  }
+
+let getNominals = (~haveUrl: bool, ~url: string, ~set: (nominals => nominals) => unit) => {
+    if (haveUrl) {
+        let dataUrl = `${url}/comp-input/nominals.json`
+        dataUrl->Fetch.fetch->Js.Promise.then_(Fetch.Response.json, _)->Js.Promise.then_(x => {
+            x
+            ->unsafeCastNominals
+            ->(n => set(_ => n))
             ->Js.Promise.resolve
         }, _) |> ignore
     }
