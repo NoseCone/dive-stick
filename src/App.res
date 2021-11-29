@@ -1,41 +1,18 @@
 %%raw(`import './site.css';`)
 
-type utcOffset = {timeZoneMinutes: int}
-type radius = {radius: string}
-type give = {giveDistance: option<string>, giveFraction: float}
-type earth = {sphere: radius}
-type earthMath = string
-
-type comp = {
-  compName: string,
-  scoreBack: option<string>,
-  utcOffset: utcOffset,
-  from: string,
-  to: string,
-  location: string,
-  earth: earth,
-  earthMath: earthMath,
-  give: give,
-}
-
-external unsafeCastComp: Js.Json.t => comp = "%identity"
+external unsafeCastComp: Js.Json.t => Types.comp = "%identity"
 
 @react.component
 let make = () => {
   let url = RescriptReactRouter.useUrl()
   let (compUrl, setCompUrl) = React.useState(_ => "")
+  let (comp, setComp) = React.useState(_ => Types.nullComp)
+  let haveCompUrl = compUrl != ""
 
   React.useEffect2(() => {
     switch url.path {
     | list{"comp-prefix", compPrefix} =>
-      let compUrl' = `http://${compPrefix}.flaretiming.com/json`
-      setCompUrl(_ => compUrl')
-      let data = `${compUrl'}/comp-input/comps.json`
-      Js.log2("JSON", data)
-      data->Fetch.fetch->Js.Promise.then_(Fetch.Response.json, _)->Js.Promise.then_(obj => {
-        obj->unsafeCastComp->(c => Js.log2("COMP", c))->Js.Promise.resolve
-      }, _) |> ignore
-
+      setCompUrl(_ => `http://${compPrefix}.flaretiming.com/json`)
       RescriptReactRouter.push("/comp")->ignore
       None
 
@@ -43,11 +20,27 @@ let make = () => {
     }
   }, (url, setCompUrl))
 
+  React.useEffect3(() => {
+    Js.log(`compUrl: ${compUrl}`)
+    if haveCompUrl {
+      let dataUrl = `${compUrl}/comp-input/comps.json`
+      Js.log(`fetching JSON from: ${dataUrl}`)
+      dataUrl->Fetch.fetch->Js.Promise.then_(Fetch.Response.json, _)->Js.Promise.then_(obj => {
+        obj->unsafeCastComp->((c: Types.comp) => {
+          Js.log2("got COMP:", c)
+          setComp(_ => c)
+          })->Js.Promise.resolve
+      }, _) |> ignore
+    }
+    None
+  }, (haveCompUrl, compUrl, setComp))
+
   let component = switch url.path {
   | list{"comp-prefix", _compPrefix} => <div />
-  | list{"settings"} => <div> <CompHeader /> {React.string("Settings")} <CompTabs /> </div>
-  | list{"comp"} => <div> <CompHeader /> {React.string("Tasks")} <CompTabs /> </div>
-  | list{"pilots"} => <div> <CompHeader /> {React.string("Pilots")} <CompTabs /> </div>
+  | list{"settings"} =>
+    <div> <CompHeader comp={comp} /> {React.string("Settings")} <CompTabs /> </div>
+  | list{"comp"} => <div> <CompHeader comp={comp} /> {React.string("Tasks")} <CompTabs /> </div>
+  | list{"pilots"} => <div> <CompHeader comp={comp} /> {React.string("Pilots")} <CompTabs /> </div>
   | list{} => <Comps />
   | _ => <div> {React.string("Route not found")} </div>
   }

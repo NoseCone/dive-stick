@@ -1,14 +1,14 @@
 let s = React.string
 
 @react.component
-let make = () => {
+let make = (~comp: Types.comp) => {
   <>
     <div className="container">
       <div className="tile is-ancestor" wrap="">
         <div className="tile">
           <div className="tile is-parent">
             <div className="tile is-child box">
-              <p className="title is-3"> {s("{comp.compName}")} </p>
+              <p className="title is-3"> {s(comp.compName)} </p>
               <p className="title is-5"> {s("{comp.compSlug}")} </p>
               <div className="example">
                 <div className="field is-grouped is-grouped-multiline">

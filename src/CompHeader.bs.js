@@ -7,6 +7,7 @@ function s(prim) {
 }
 
 function CompHeader(Props) {
+  var comp = Props.comp;
   return React.createElement(React.Fragment, undefined, React.createElement("div", {
                   className: "container"
                 }, React.createElement("div", {
@@ -20,7 +21,7 @@ function CompHeader(Props) {
                                   className: "tile is-child box"
                                 }, React.createElement("p", {
                                       className: "title is-3"
-                                    }, "{comp.compName}"), React.createElement("p", {
+                                    }, comp.compName), React.createElement("p", {
                                       className: "title is-5"
                                     }, "{comp.compSlug}"), React.createElement("div", {
                                       className: "example"

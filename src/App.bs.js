@@ -4,6 +4,7 @@ import * as Curry from "rescript/lib/es6/curry.js";
 import * as React from "react";
 import * as RescriptReactRouter from "@rescript/react/src/RescriptReactRouter.bs.js";
 import * as Comps$RescriptReactIntro from "./Comps.bs.js";
+import * as Types$RescriptReactIntro from "./Types.bs.js";
 import * as CompTabs$RescriptReactIntro from "./CompTabs.bs.js";
 import * as CompHeader$RescriptReactIntro from "./CompHeader.bs.js";
 
@@ -16,6 +17,13 @@ function App(Props) {
         return "";
       });
   var setCompUrl = match[1];
+  var compUrl = match[0];
+  var match$1 = React.useState(function () {
+        return Types$RescriptReactIntro.nullComp;
+      });
+  var setComp = match$1[1];
+  var comp = match$1[0];
+  var haveCompUrl = compUrl !== "";
   React.useEffect((function () {
           var match = url.path;
           if (!match) {
@@ -31,57 +39,75 @@ function App(Props) {
           if (match$1.tl) {
             return ;
           }
-          var compUrl$p = "http://" + match$1.hd + ".flaretiming.com/json";
+          var compPrefix = match$1.hd;
           Curry._1(setCompUrl, (function (param) {
-                  return compUrl$p;
+                  return "http://" + compPrefix + ".flaretiming.com/json";
                 }));
-          var data = compUrl$p + "/comp-input/comps.json";
-          console.log("JSON", data);
-          var __x = fetch(data);
-          var __x$1 = __x.then(function (prim) {
-                return prim.json();
-              });
-          __x$1.then(function (obj) {
-                return Promise.resolve((console.log("COMP", obj), undefined));
-              });
           RescriptReactRouter.push("/comp");
           
         }), [
         url,
         setCompUrl
       ]);
-  var match$1 = url.path;
+  React.useEffect((function () {
+          console.log("compUrl: " + compUrl);
+          if (haveCompUrl) {
+            var dataUrl = compUrl + "/comp-input/comps.json";
+            console.log("fetching JSON from: " + dataUrl);
+            var __x = fetch(dataUrl);
+            var __x$1 = __x.then(function (prim) {
+                  return prim.json();
+                });
+            __x$1.then(function (obj) {
+                  return Promise.resolve((console.log("got COMP:", obj), Curry._1(setComp, (function (param) {
+                                      return obj;
+                                    }))));
+                });
+          }
+          
+        }), [
+        haveCompUrl,
+        compUrl,
+        setComp
+      ]);
+  var match$2 = url.path;
   var component;
   var exit = 0;
-  if (match$1) {
-    switch (match$1.hd) {
+  if (match$2) {
+    switch (match$2.hd) {
       case "comp" :
-          if (match$1.tl) {
+          if (match$2.tl) {
             exit = 1;
           } else {
-            component = React.createElement("div", undefined, React.createElement(CompHeader$RescriptReactIntro.make, {}), "Tasks", React.createElement(CompTabs$RescriptReactIntro.make, {}));
+            component = React.createElement("div", undefined, React.createElement(CompHeader$RescriptReactIntro.make, {
+                      comp: comp
+                    }), "Tasks", React.createElement(CompTabs$RescriptReactIntro.make, {}));
           }
           break;
       case "comp-prefix" :
-          var match$2 = match$1.tl;
-          if (match$2 && !match$2.tl) {
+          var match$3 = match$2.tl;
+          if (match$3 && !match$3.tl) {
             component = React.createElement("div", undefined);
           } else {
             exit = 1;
           }
           break;
       case "pilots" :
-          if (match$1.tl) {
+          if (match$2.tl) {
             exit = 1;
           } else {
-            component = React.createElement("div", undefined, React.createElement(CompHeader$RescriptReactIntro.make, {}), "Pilots", React.createElement(CompTabs$RescriptReactIntro.make, {}));
+            component = React.createElement("div", undefined, React.createElement(CompHeader$RescriptReactIntro.make, {
+                      comp: comp
+                    }), "Pilots", React.createElement(CompTabs$RescriptReactIntro.make, {}));
           }
           break;
       case "settings" :
-          if (match$1.tl) {
+          if (match$2.tl) {
             exit = 1;
           } else {
-            component = React.createElement("div", undefined, React.createElement(CompHeader$RescriptReactIntro.make, {}), "Settings", React.createElement(CompTabs$RescriptReactIntro.make, {}));
+            component = React.createElement("div", undefined, React.createElement(CompHeader$RescriptReactIntro.make, {
+                      comp: comp
+                    }), "Settings", React.createElement(CompTabs$RescriptReactIntro.make, {}));
           }
           break;
       default:
@@ -93,7 +119,7 @@ function App(Props) {
   if (exit === 1) {
     component = React.createElement("div", undefined, "Route not found");
   }
-  return React.createElement("div", undefined, component, "comp url: " + match[0]);
+  return React.createElement("div", undefined, component, "comp url: " + compUrl);
 }
 
 var make = App;
