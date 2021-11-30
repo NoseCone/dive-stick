@@ -8,7 +8,7 @@ let make = () => {
       <div className="tile is-ancestor">
         <div className="tile is-parent">
           <article className="tile is-child notification is-light">
-            <p className="title"> {s("Leading Edge")} </p>
+            <p className="title"> {s("Dive Stick")} </p>
             <p className="subtitle">
               {s("Comps scored with ")}
               <a href="https://flaretiming.com"> {s("Flare Timing")} </a>
@@ -21,7 +21,7 @@ let make = () => {
       <p>
         {s("Want")}
         <a href="https://flaretiming.com/posts/2018-12-19-add-a-comp.html">
-          {s("your comp here")}
+          {s(" your comp here")}
         </a>
         {s("?")}
       </p>

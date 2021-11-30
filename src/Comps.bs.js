@@ -18,7 +18,7 @@ function Comps(Props) {
                               className: "tile is-child notification is-light"
                             }, React.createElement("p", {
                                   className: "title"
-                                }, "Leading Edge"), React.createElement("p", {
+                                }, "Dive Stick"), React.createElement("p", {
                                   className: "subtitle"
                                 }, "Comps scored with ", React.createElement("a", {
                                       href: "https://flaretiming.com"
@@ -26,7 +26,7 @@ function Comps(Props) {
                                       href: "https://rescript-lang.org/"
                                     }, "rescript"))))), React.createElement("p", undefined, "Want", React.createElement("a", {
                           href: "https://flaretiming.com/posts/2018-12-19-add-a-comp.html"
-                        }, "your comp here"), "?"), React.createElement("div", {
+                        }, " your comp here"), "?"), React.createElement("div", {
                       className: "tile is-ancestor"
                     }, React.createElement("div", {
                           className: "tile is-vertical is-5"
