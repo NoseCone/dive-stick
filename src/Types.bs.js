@@ -2,10 +2,45 @@
 
 import * as Jzon from "rescript-jzon/src/Jzon.bs.js";
 import * as Curry from "rescript/lib/es6/curry.js";
+import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Result from "rescript/lib/es6/belt_Result.js";
 
 function compSlug(comp) {
   return comp.from + " to " + comp.to + ", " + comp.location;
+}
+
+var nullPilotStatus_pilotStatus = [];
+
+var nullPilotStatus = {
+  pilotId: "",
+  pilotName: "",
+  pilotStatus: nullPilotStatus_pilotStatus
+};
+
+function mkPilot(xs) {
+  if (xs.length !== 2) {
+    return {
+            pilotId: "",
+            pilotName: "",
+            pilotStatus: []
+          };
+  }
+  var match = xs[0];
+  if (match.length !== 2) {
+    return {
+            pilotId: "",
+            pilotName: "",
+            pilotStatus: []
+          };
+  }
+  var pilotId = match[0];
+  var pilotName = match[1];
+  var pilotStatus = xs[1];
+  return {
+          pilotId: pilotId,
+          pilotName: pilotName,
+          pilotStatus: pilotStatus
+        };
 }
 
 var stopped = Jzon.object2((function (param) {
@@ -69,14 +104,6 @@ var Codecs = {
   rawZone: rawZone,
   rawZones: rawZones,
   task: task
-};
-
-var nullPilotStatus_pilotStatus = [];
-
-var nullPilotStatus = {
-  pilotId: "",
-  pilotName: "",
-  pilotStatus: nullPilotStatus_pilotStatus
 };
 
 function getComp(haveUrl, url, set) {
@@ -159,8 +186,10 @@ function getCompPilots(haveUrl, url, set) {
         return prim.json();
       });
   __x$1.then(function (x) {
+        var ps = Jzon.decodeWith(x, Jzon.array(Jzon.array(Jzon.array(Jzon.string))));
+        var ps$p = Belt_Array.map(Belt_Result.getWithDefault(ps, []), mkPilot);
         return Promise.resolve(Curry._1(set, (function (param) {
-                          return x;
+                          return ps$p;
                         })));
       });
   
@@ -198,8 +227,9 @@ export {
   nullComp ,
   compSlug ,
   nullNominals ,
-  Codecs ,
   nullPilotStatus ,
+  mkPilot ,
+  Codecs ,
   getComp ,
   getNominals ,
   getTaskLengths ,

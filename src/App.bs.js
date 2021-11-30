@@ -61,6 +61,11 @@ function App(Props) {
         return [];
       });
   var setCompTasks = match$4[1];
+  var compTasks = match$4[0];
+  var match$5 = React.useState(function () {
+        return [];
+      });
+  var setCompPilots = match$5[1];
   var haveCompUrl = compUrl !== "";
   React.useEffect((function () {
           var match = url.path;
@@ -119,42 +124,53 @@ function App(Props) {
         compUrl,
         setCompTasks
       ]);
-  var match$5 = url.path;
-  if (!match$5) {
+  React.useEffect((function () {
+          Types$RescriptReactIntro.getCompPilots(haveCompUrl, compUrl, setCompPilots);
+          
+        }), [
+        haveCompUrl,
+        compUrl,
+        setCompPilots
+      ]);
+  var match$6 = url.path;
+  if (!match$6) {
     return React.createElement(Comps$RescriptReactIntro.make, {});
   }
-  switch (match$5.hd) {
+  switch (match$6.hd) {
     case "comp" :
-        if (!match$5.tl) {
+        if (!match$6.tl) {
           return React.createElement("div", undefined, React.createElement(App$Spacer, {}), React.createElement(CompHeader$RescriptReactIntro.make, {
                           comp: comp,
                           nominals: nominals
                         }), React.createElement(App$Spacer, {}), React.createElement(App$Breadcrumb, {
                           compName: comp.compName
                         }), React.createElement(CompTabs$RescriptReactIntro.make, {}), React.createElement(CompTasks$RescriptReactIntro.make, {
-                          tasks: match$4[0],
+                          tasks: compTasks,
                           taskLengths: match$3[0]
                         }));
         }
         break;
     case "comp-prefix" :
-        var match$6 = match$5.tl;
-        if (match$6 && !match$6.tl) {
+        var match$7 = match$6.tl;
+        if (match$7 && !match$7.tl) {
           return React.createElement("div", undefined);
         }
         break;
     case "pilots" :
-        if (!match$5.tl) {
+        if (!match$6.tl) {
           return React.createElement("div", undefined, React.createElement(App$Spacer, {}), React.createElement(CompHeader$RescriptReactIntro.make, {
                           comp: comp,
                           nominals: nominals
                         }), React.createElement(App$Spacer, {}), React.createElement(App$Breadcrumb, {
                           compName: comp.compName
-                        }), React.createElement(CompTabs$RescriptReactIntro.make, {}), React.createElement(CompPilots$RescriptReactIntro.make, {}));
+                        }), React.createElement(CompTabs$RescriptReactIntro.make, {}), React.createElement(CompPilots$RescriptReactIntro.make, {
+                          tasks: compTasks,
+                          pilots: match$5[0]
+                        }));
         }
         break;
     case "settings" :
-        if (!match$5.tl) {
+        if (!match$6.tl) {
           return React.createElement("div", undefined, React.createElement(App$Spacer, {}), React.createElement(CompHeader$RescriptReactIntro.make, {
                           comp: comp,
                           nominals: nominals

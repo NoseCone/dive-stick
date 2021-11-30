@@ -56,6 +56,23 @@ type task = {
   cancelled: option<bool>,
 }
 
+type pilotStatus = {
+  pilotId: string,
+  pilotName: string,
+  pilotStatus: array<string>,
+}
+
+let nullPilotStatus = {
+  pilotId: "",
+  pilotName: "",
+  pilotStatus: [],
+}
+
+let mkPilot = (xs) => switch (xs) {
+  | [[pilotId, pilotName], pilotStatus] => {pilotId, pilotName, pilotStatus}
+  | _ => {pilotId: "", pilotName: "", pilotStatus: []}
+}
+
 module Codecs = {
   let stopped = Jzon.object2(
     ({announced, retroactive}) => (announced, retroactive),
@@ -85,18 +102,6 @@ module Codecs = {
     Jzon.field("stopped", stopped)->Jzon.optional,
     Jzon.field("cancelled", Jzon.bool)->Jzon.optional,
   )
-}
-
-type pilotStatus = {
-  pilotId: string,
-  pilotName: string,
-  pilotStatus: array<string>,
-}
-
-let nullPilotStatus = {
-  pilotId: "",
-  pilotName: "",
-  pilotStatus: [],
 }
 
 external unsafeCast: Js.Json.t => 'a = "%identity"
@@ -155,7 +160,11 @@ let getCompPilots = (
   if haveUrl {
     let dataUrl = `${url}/gap-point/pilots-status.json`
     dataUrl->Fetch.fetch->Js.Promise.then_(Fetch.Response.json, _)->Js.Promise.then_(x => {
-      x->unsafeCast->(n => set(_ => n))->Js.Promise.resolve
+      x->Jzon.decodeWith(Jzon.array(Jzon.array(Jzon.array(Jzon.string))))
+      ->(ps => {
+        let ps' = Belt.Array.map(Belt.Result.getWithDefault(ps, []), mkPilot)
+        set(_ => ps')
+      })->Js.Promise.resolve
     }, _) |> ignore
   }
 }

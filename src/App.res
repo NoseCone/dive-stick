@@ -25,6 +25,7 @@ let make = () => {
   let (nominals, setNominals) = React.useState(_ => Types.nullNominals)
   let (taskLengths, setTaskLengths) = React.useState(_ => [])
   let (compTasks, setCompTasks) = React.useState(_ => [])
+  let (compPilots, setCompPilots) = React.useState(_ => [])
   let haveCompUrl = compUrl != ""
 
   React.useEffect2(() => {
@@ -57,6 +58,11 @@ let make = () => {
     Types.getCompTasks(~haveUrl=haveCompUrl, ~url=compUrl, ~set=setCompTasks)
     None
   }, (haveCompUrl, compUrl, setCompTasks))
+
+  React.useEffect3(() => {
+    Types.getCompPilots(~haveUrl=haveCompUrl, ~url=compUrl, ~set=setCompPilots)
+    None
+  }, (haveCompUrl, compUrl, setCompPilots))
 
   let component = switch url.path {
   | list{"comp-prefix", _compPrefix} => <div />
@@ -91,7 +97,7 @@ let make = () => {
       <Spacer />
       <Breadcrumb compName={comp.compName} />
       <CompTabs />
-      <CompPilots />
+      <CompPilots tasks={compTasks} pilots={compPilots} />
     </div>
 
   | list{} => <Comps />
