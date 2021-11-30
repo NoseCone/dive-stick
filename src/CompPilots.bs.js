@@ -7,6 +7,14 @@ function s(prim) {
   return prim;
 }
 
+function mute(s) {
+  if (s === "DF") {
+    return "";
+  } else {
+    return s;
+  }
+}
+
 function CompPilots$PilotRow(Props) {
   var pilot = Props.pilot;
   return React.createElement("tr", undefined, React.createElement("td", {
@@ -14,11 +22,12 @@ function CompPilots$PilotRow(Props) {
                 }, pilot.pilotId), React.createElement("td", undefined, pilot.pilotName), Belt_Array.mapWithIndex(pilot.pilotStatus, (function (i, status) {
                     return React.createElement("td", {
                                 key: String(i)
-                              }, status);
+                              }, mute(status));
                   })));
 }
 
 var PilotRow = {
+  mute: mute,
   make: CompPilots$PilotRow
 };
 
@@ -27,7 +36,8 @@ function CompPilots(Props) {
   var pilots = Props.pilots;
   var xs = Belt_Array.map(pilots, (function (pilot) {
           return React.createElement(CompPilots$PilotRow, {
-                      pilot: pilot
+                      pilot: pilot,
+                      key: pilot.pilotId
                     });
         }));
   return React.createElement(React.Fragment, undefined, React.createElement("table", {

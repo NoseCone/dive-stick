@@ -1,6 +1,7 @@
 let s = React.string
 
 module PilotRow = {
+  let mute = s => if s == "DF" {""} else {s}
   @react.component
   let make = (~pilot: Types.pilotStatus) => {
     <tr>
@@ -8,7 +9,7 @@ module PilotRow = {
       <td> {s(pilot.pilotName)} </td>
       {React.array(
         Belt.Array.mapWithIndex(pilot.pilotStatus, (i, status) => {
-          <td key={Belt.Int.toString(i)}> {s(status)} </td>
+          <td key={Belt.Int.toString(i)}> {s(mute(status))} </td>
         }),
       )}
     </tr>
@@ -18,7 +19,7 @@ module PilotRow = {
 @react.component
 let make = (~tasks: array<Types.task>, ~pilots: array<Types.pilotStatus>) => {
   let xs = Belt.Array.map(pilots, pilot => {
-    <PilotRow pilot={pilot} />
+    <PilotRow key={pilot.pilotId} pilot={pilot} />
   })
   <>
     <table className="table is-bordered is-striped">
