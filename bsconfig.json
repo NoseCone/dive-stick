@@ -23,5 +23,5 @@
       "language": "typescript"
     },
   
-    "bs-dependencies": ["@rescript/react", "bs-fetch"]
+    "bs-dependencies": ["@rescript/react", "bs-fetch", "rescript-jzon"]
   }

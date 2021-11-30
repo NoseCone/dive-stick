@@ -56,6 +56,37 @@ type task = {
   cancelled: option<bool>,
 }
 
+module Codecs = {
+  let stopped = Jzon.object2(
+    ({announced, retroactive}) => (announced, retroactive),
+    ((announced, retroactive)) => {announced: announced, retroactive: retroactive}->Ok,
+    Jzon.field("announced", Jzon.string),
+    Jzon.field("retroactive", Jzon.string),
+  )
+
+  let rawZone = Jzon.object1(
+    ({zoneName}) => zoneName,
+    zoneName => {zoneName: zoneName}->Ok,
+    Jzon.field("zoneName", Jzon.string),
+  )
+
+  let rawZones = Jzon.object1(
+    ({raw}) => raw,
+    raw => {raw: raw}->Ok,
+    Jzon.field("raw", Jzon.array(rawZone)),
+  )
+
+  let task = Jzon.object4(
+    ({taskName, zones, stopped, cancelled}) => (taskName, zones, stopped, cancelled),
+    ((taskName, zones, stopped, cancelled)) =>
+      {taskName: taskName, zones: zones, stopped: stopped, cancelled: cancelled}->Ok,
+    Jzon.field("taskName", Jzon.string),
+    Jzon.field("zones", rawZones),
+    Jzon.field("stopped", stopped)->Jzon.optional,
+    Jzon.field("cancelled", Jzon.bool)->Jzon.optional,
+  )
+}
+
 type pilotStatus = {
   pilotId: string,
   pilotName: string,
@@ -105,7 +136,13 @@ let getCompTasks = (~haveUrl: bool, ~url: string, ~set: (array<task> => array<ta
   if haveUrl {
     let dataUrl = `${url}/comp-input/tasks.json`
     dataUrl->Fetch.fetch->Js.Promise.then_(Fetch.Response.json, _)->Js.Promise.then_(x => {
-      x->unsafeCast->(n => set(_ => n))->Js.Promise.resolve
+      x
+      ->Jzon.decodeWith(Jzon.array(Codecs.task))
+      ->(ts => {
+        let ts' = Belt.Result.getWithDefault(ts, [])
+        set(_ => ts')
+      })
+      ->Js.Promise.resolve
     }, _) |> ignore
   }
 }
