@@ -52,9 +52,10 @@ var TaskRow = {
 function CompTasks(Props) {
   var tasks = Props.tasks;
   var taskLengths = Props.taskLengths;
-  var xs = Belt_Array.map(mkTaskRows(tasks, taskLengths), (function (row) {
+  var xs = Belt_Array.mapWithIndex(mkTaskRows(tasks, taskLengths), (function (i, row) {
           return React.createElement(CompTasks$TaskRow, {
-                      row: row
+                      row: row,
+                      key: String(i)
                     });
         }));
   return React.createElement(React.Fragment, undefined, React.createElement("table", {

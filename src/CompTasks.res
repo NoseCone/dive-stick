@@ -48,7 +48,10 @@ module TaskRow = {
 
 @react.component
 let make = (~tasks: array<task>, ~taskLengths: array<taskLength>) => {
-  let xs = mkTaskRows(tasks, taskLengths)->Belt.Array.map(row => <TaskRow row={row} />)
+  let xs =
+    mkTaskRows(tasks, taskLengths)->Belt.Array.mapWithIndex((i, row) =>
+      <TaskRow key={Belt.Int.toString(i)} row={row} />
+    )
   <>
     <table className="table is-striped">
       <thead>
