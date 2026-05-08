@@ -52,5 +52,6 @@
     "gentype": "^4.3.0",
     "rescript": "^9.1.4",
     "sass": "^1.43.5"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }
