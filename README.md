@@ -3,9 +3,10 @@
 ## Developing
 
 Work on the stylesheet `site.sass` with:
+
 ```bash
-> cd src
-> sass --watch site.sass:site.css --load-path ../node_modules
+$ cd src
+$ sass --watch site.sass:site.css --load-path ../node_modules
 ```
 
 Start a terminal to watch the rescript sources with `yarn start:res` or
@@ -15,17 +16,19 @@ start a development server with `yarn start`.
 ## Building
 
 Build the stylesheet `site.css` with:
+
 ```bash
-> cd src
-> sass site.sass:site.css --load-path ../node_modules
+$ yarn style
 ```
 
-Build the app with `yarn build`.
+Build the app with `yarn build` and serve this locally with `yarn dlx serve -s
+build`.
 
 ## Publishing
 
-Build on branch `develop`, switch to branch `main` and then copy the build to the root, commit and push.
+Build on branch `develop`, switch to branch `main` and then copy the build to
+the root, commit and push.
 
 ```bash
-> cp -a build/ .
+$ cp -a build/ .
 ```
