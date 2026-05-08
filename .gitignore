@@ -27,3 +27,4 @@ yarn-error.log*
 lib/bs/
 src/site.css
 src/site.css.map
+.yarn
